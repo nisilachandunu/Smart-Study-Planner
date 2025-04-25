@@ -8,73 +8,82 @@ struct DashboardView: View {
     var body: some View {
         TabView {
             NavigationView {
-                ScrollView {
-                    VStack(spacing: 20) {
-                        // Welcome Section with Profile Image
-                        HStack {
-                            HStack(spacing: 12) {
-                                Image(systemName: "person.circle.fill") // Placeholder for profile image
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                    .foregroundColor(.gray)
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Welcome back,")
-                                        .font(.subheadline)
+                VStack(spacing: 0) {
+                    // Search Bar - Always visible at the top
+                    DashboardSearchBar(text: $viewModel.searchQuery)
+                        .padding(.horizontal)
+                        .padding(.vertical, 2)
+                        .background(Color(.systemBackground))
+                    
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            // Welcome Section with Profile Image
+                            HStack {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
                                         .foregroundColor(.gray)
-                                    Text(viewModel.userName)
-                                        .font(.title2)
-                                        .fontWeight(.bold)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text("Welcome back,")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                        Text(viewModel.userName)
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                    }
                                 }
+                                Spacer()
+                                NotificationBellView(count: viewModel.unreadNotifications)
                             }
-                            Spacer()
-                            NotificationBellView(count: viewModel.unreadNotifications)
-                        }
-                        .padding()
-                        
-                        // Search Results
-                        if viewModel.isSearching {
-                            SearchResultsView(results: viewModel.searchResults)
-                                .padding(.horizontal)
-                        } else {
-                            // Next Study Session Card
-                            NextSessionCard(session: viewModel.nextSession)
-                                .padding(.horizontal)
+                            .padding(.horizontal)
                             
-                            // Weekly Progress
-                            WeeklyProgressCard(progressData: viewModel.weeklyProgress)
-                                .padding(.horizontal)
-                            
-                            // Focus Mode Toggle
-                            FocusModeCard(isEnabled: $isFocusModeEnabled,
-                                        estimatedTime: viewModel.estimatedFocusTime)
-                                .padding(.horizontal)
-                            
-                            // Current Session
-                            if viewModel.hasActiveSession {
-                                CurrentSessionCard(
-                                    remainingTime: viewModel.currentSessionRemainingTime,
-                                    onEnd: viewModel.endCurrentSession
-                                )
-                                .padding(.horizontal)
+                            // Search Results or Main Content
+                            if viewModel.isSearching {
+                                SearchResultsView(results: viewModel.searchResults)
+                                    .padding(.horizontal)
+                            } else {
+                                // Next Study Session Card
+                                NextSessionCard(session: viewModel.nextSession)
+                                    .padding(.horizontal)
+                                
+                                // Weekly Progress
+                                WeeklyProgressCard(progressData: viewModel.weeklyProgress)
+                                    .padding(.horizontal)
+                                
+                                // Focus Mode Toggle
+                                FocusModeCard(isEnabled: $isFocusModeEnabled,
+                                            estimatedTime: viewModel.estimatedFocusTime)
+                                    .padding(.horizontal)
+                                
+                                // Current Session
+                                if viewModel.hasActiveSession {
+                                    CurrentSessionCard(
+                                        remainingTime: viewModel.currentSessionRemainingTime,
+                                        onEnd: viewModel.endCurrentSession
+                                    )
+                                    .padding(.horizontal)
+                                }
+                                
+                                // Notifications
+                                NotificationsCard(notifications: viewModel.recentNotifications)
+                                    .padding(.horizontal)
                             }
-                            
-                            // Notifications
-                            NotificationsCard(notifications: viewModel.recentNotifications)
-                                .padding(.horizontal)
                         }
+                        .padding(.vertical, 4)
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .background(Color(.systemBackground))
-                .searchable(text: $viewModel.searchQuery,
-                           prompt: "Search tasks or subjects...")
             }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
             
-            Text("Tasks")
+            TaskManagerView()
                 .tabItem {
                     Label("Tasks", systemImage: "list.bullet")
                 }
@@ -89,12 +98,39 @@ struct DashboardView: View {
                     Label("Locations", systemImage: "mappin.and.ellipse")
                 }
             
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
         }
-        .tint(.blue) // Set the accent color for the tab bar
+        .tint(.blue)
+    }
+}
+
+// Add SearchBar view for Dashboard
+struct DashboardSearchBar: View {
+    @Binding var text: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+            
+            TextField("Search tasks or subjects...", text: $text)
+                .textFieldStyle(PlainTextFieldStyle())
+            
+            if !text.isEmpty {
+                Button(action: {
+                    text = ""
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(8)
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
     }
 }
 

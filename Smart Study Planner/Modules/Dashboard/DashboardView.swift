@@ -93,7 +93,7 @@ struct DashboardView: View {
                     Label("Progress", systemImage: "chart.line.uptrend.xyaxis")
                 }
             
-            Text("Locations")
+            LocationsView()
                 .tabItem {
                     Label("Locations", systemImage: "mappin.and.ellipse")
                 }

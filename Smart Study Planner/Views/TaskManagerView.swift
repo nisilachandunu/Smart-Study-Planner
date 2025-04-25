@@ -1,7 +1,9 @@
 import SwiftUI
+import MapKit
 
 struct TaskManagerView: View {
     @StateObject private var viewModel = TaskManagerViewModel()
+    @StateObject private var mapViewModel = MapViewModel()
     
     var body: some View {
         NavigationView {
@@ -76,37 +78,24 @@ struct TaskManagerView: View {
                                 viewModel.selectedFilter = .byDueDate
                                 viewModel.applyFilter(.byDueDate)
                             }
+                            FilterButton(title: "Study Locations", isSelected: viewModel.selectedFilter == .map) {
+                                viewModel.selectedFilter = .map
+                                viewModel.applyFilter(.map)
+                            }
                         }
                         .padding(.horizontal)
                     }
                     .padding(.vertical, 4)
                     .background(Color(.systemBackground))
                     
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 16) {
-                            // Pending Tasks Section
-                            Text("Pending Tasks")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [.purple, .blue],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .padding(.horizontal)
-                            
-                            ForEach(viewModel.pendingTasks) { task in
-                                NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
-                                    TaskCard(task: task)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                            
-                            // Completed Tasks Section
-                            HStack {
-                                Text("Completed Tasks")
+                    if viewModel.selectedFilter == .map {
+                        StudyLocationMapView(studyLocations: mapViewModel.studyLocations)
+                            .ignoresSafeArea(edges: .bottom)
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 16) {
+                                // Pending Tasks Section
+                                Text("Pending Tasks")
                                     .font(.title2)
                                     .fontWeight(.bold)
                                     .foregroundStyle(
@@ -116,28 +105,50 @@ struct TaskManagerView: View {
                                             endPoint: .trailing
                                         )
                                     )
+                                    .padding(.horizontal)
+                                
+                                ForEach(viewModel.pendingTasks) { task in
+                                    NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
+                                        TaskCard(task: task)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                                
+                                // Completed Tasks Section
+                                HStack {
+                                    Text("Completed Tasks")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(
+                                            LinearGradient(
+                                                colors: [.purple, .blue],
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                    Spacer()
+                                    Button("See All") {
+                                        viewModel.showAllCompleted = true
+                                    }
+                                    .foregroundColor(.blue)
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                }
+                                .padding(.horizontal)
+                                
+                                ForEach(viewModel.completedTasks.prefix(1)) { task in
+                                    NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
+                                        CompletedTaskCard(task: task)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                                
+                                // Add padding at the bottom to prevent tab bar overlap
                                 Spacer()
-                                Button("See All") {
-                                    viewModel.showAllCompleted = true
-                                }
-                                .foregroundColor(.blue)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
+                                    .frame(height: 90)
                             }
-                            .padding(.horizontal)
-                            
-                            ForEach(viewModel.completedTasks.prefix(1)) { task in
-                                NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
-                                    CompletedTaskCard(task: task)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                            
-                            // Add padding at the bottom to prevent tab bar overlap
-                            Spacer()
-                                .frame(height: 90)
+                            .padding(.vertical)
                         }
-                        .padding(.vertical)
                     }
                 }
             }
@@ -323,5 +334,15 @@ struct TaskSearchBar: View {
         .padding(8)
         .background(Color(.systemGray6))
         .cornerRadius(10)
+    }
+}
+
+// Remove duplicate MapView declaration
+struct MapView: View {
+    let studyLocations: [StudyLocation]
+    
+    var body: some View {
+        // Implementation of MapView
+        Text("Map View")
     }
 } 

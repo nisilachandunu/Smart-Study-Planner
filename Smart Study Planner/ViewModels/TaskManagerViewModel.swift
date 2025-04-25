@@ -5,6 +5,7 @@ enum TaskFilter {
     case all
     case bySubject
     case byDueDate
+    case map
 }
 
 class TaskManagerViewModel: ObservableObject {
@@ -114,6 +115,9 @@ class TaskManagerViewModel: ObservableObject {
         case .byDueDate:
             pendingTasks.sort { $0.deadline < $1.deadline }
             completedTasks.sort { $0.deadline < $1.deadline }
+        case .map:
+            // No sorting needed for map view
+            break
         }
         
         // Trigger UI update

@@ -1,3 +1,10 @@
+//
+//  KeychainService.swift
+//  Smart Study Planner
+//
+//  Created by Nisila on 2025-04-23.
+//
+
 import Foundation
 import Security
 
@@ -11,7 +18,7 @@ class KeychainService {
         // Save email
         let emailQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: "com.example.CardioCompanionApp",
+            kSecAttrService as String: "com.example.SmartStudyPlanner",
             kSecAttrAccount as String: "email",
             kSecValueData as String: email.data(using: .utf8)!
         ]
@@ -25,7 +32,7 @@ class KeychainService {
         // Save password
         let passwordQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: "com.example.CardioCompanionApp",
+            kSecAttrService as String: "com.example.SmartStudyPlanner",
             kSecAttrAccount as String: "password",
             kSecValueData as String: password.data(using: .utf8)!
         ]
@@ -43,7 +50,7 @@ class KeychainService {
         // Retrieve email
         let emailQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: "com.example.CardioCompanionApp",
+            kSecAttrService as String: "com.example.SmartStudyPlanner",
             kSecAttrAccount as String: "email",
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnData as String: true
@@ -56,7 +63,7 @@ class KeychainService {
         // Retrieve password
         let passwordQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: "com.example.CardioCompanionApp",
+            kSecAttrService as String: "com.example.SmartStudyPlanner",
             kSecAttrAccount as String: "password",
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnData as String: true
@@ -72,7 +79,7 @@ class KeychainService {
     func deleteCredentials() {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: "com.example.CardioCompanionApp"
+            kSecAttrService as String: "com.example.SmartStudyPlanner"
         ]
         SecItemDelete(query as CFDictionary)
     }

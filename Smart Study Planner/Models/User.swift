@@ -8,13 +8,13 @@
 import Foundation
 
 struct User: Identifiable, Codable {
-    let id: String
-    let email: String
-    let name: String
-    let token: String
-    var notificationEnabled: Bool
-    var theme: String
-    var defaultStudyDuration: Double
+    let id: String           // Unique identifier for the user
+    let email: String        // User's email for account recovery and notifications
+    let name: String         // User's name for personalization
+    let token: String        // Authentication token for API requests
+    var notificationEnabled: Bool  // Preference for receiving notifications
+    var theme: String        // UI theme preference ("light" or "dark")
+    var defaultStudyDuration: Double  // Default study session duration in seconds
     
     // Custom description for better debugging
     var description: String {
@@ -32,10 +32,6 @@ struct AppleUser: Codable {
             "email": email
         ]
     }
-}
-
-struct PasswordResetResponse: Codable {
-    let message: String
 }
 
 struct OTPResponse: Codable {

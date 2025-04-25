@@ -13,8 +13,8 @@ struct Smart_Study_PlannerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            
-            
+            LoginView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

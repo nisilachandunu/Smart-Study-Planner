@@ -6,17 +6,6 @@ struct RegisterView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            // Back button
-            HStack {
-                Button(action: { dismiss() }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.primary)
-                        .imageScale(.large)
-                }
-                .padding(.leading)
-                Spacer()
-            }
-            
             // Title
             Text("Create Account")
                 .font(.title)

@@ -6,7 +6,28 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F04A8F3E2DBC19EF0066FBFE /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04A8F3D2DBC19EF0066FBFE /* Intents.framework */; };
+		F04A8F492DBC19EF0066FBFE /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04A8F482DBC19EF0066FBFE /* IntentsUI.framework */; };
+		F04A8F532DBC19EF0066FBFE /* CreateTaskIntentUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F04A8F472DBC19EF0066FBFE /* CreateTaskIntentUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F04A8F562DBC19EF0066FBFE /* CreateTaskIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F04A8F3B2DBC19EE0066FBFE /* CreateTaskIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		F04A8F512DBC19EF0066FBFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F051A3B52D7ABB91009BF97C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F04A8F462DBC19EF0066FBFE;
+			remoteInfo = CreateTaskIntentUI;
+		};
+		F04A8F542DBC19EF0066FBFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F051A3B52D7ABB91009BF97C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F04A8F3A2DBC19EE0066FBFE;
+			remoteInfo = CreateTaskIntent;
+		};
 		F051A3D32D7ABB93009BF97C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F051A3B52D7ABB91009BF97C /* Project object */;
@@ -23,15 +44,89 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F04A8F5F2DBC19EF0066FBFE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F04A8F532DBC19EF0066FBFE /* CreateTaskIntentUI.appex in Embed Foundation Extensions */,
+				F04A8F562DBC19EF0066FBFE /* CreateTaskIntent.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F04A8F3B2DBC19EE0066FBFE /* CreateTaskIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CreateTaskIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F04A8F3D2DBC19EF0066FBFE /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		F04A8F472DBC19EF0066FBFE /* CreateTaskIntentUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CreateTaskIntentUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F04A8F482DBC19EF0066FBFE /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		F051A3BD2D7ABB91009BF97C /* Smart Study Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart Study Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F051A3D22D7ABB93009BF97C /* Smart Study PlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart Study PlannerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F051A3DC2D7ABB93009BF97C /* Smart Study PlannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart Study PlannerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F04A8F572DBC19EF0066FBFE /* Exceptions for "CreateTaskIntent" folder in "CreateTaskIntent" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F04A8F3A2DBC19EE0066FBFE /* CreateTaskIntent */;
+		};
+		F04A8F5B2DBC19EF0066FBFE /* Exceptions for "CreateTaskIntentUI" folder in "CreateTaskIntentUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F04A8F462DBC19EF0066FBFE /* CreateTaskIntentUI */;
+		};
+		F04A8F692DBC26370066FBFE /* Exceptions for "Smart Study Planner" folder in "CreateTaskIntent" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Intents.intentdefinition,
+				Smart_Study_Planner.xcdatamodeld,
+				SmartStudyPlanner.xcdatamodeld,
+			);
+			target = F04A8F3A2DBC19EE0066FBFE /* CreateTaskIntent */;
+		};
+		F04A8F6B2DBC263C0066FBFE /* Exceptions for "Smart Study Planner" folder in "CreateTaskIntentUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Intents.intentdefinition,
+				Smart_Study_Planner.xcdatamodeld,
+				SmartStudyPlanner.xcdatamodeld,
+			);
+			target = F04A8F462DBC19EF0066FBFE /* CreateTaskIntentUI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F04A8F3F2DBC19EF0066FBFE /* CreateTaskIntent */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F04A8F572DBC19EF0066FBFE /* Exceptions for "CreateTaskIntent" folder in "CreateTaskIntent" target */,
+			);
+			path = CreateTaskIntent;
+			sourceTree = "<group>";
+		};
+		F04A8F4A2DBC19EF0066FBFE /* CreateTaskIntentUI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F04A8F5B2DBC19EF0066FBFE /* Exceptions for "CreateTaskIntentUI" folder in "CreateTaskIntentUI" target */,
+			);
+			path = CreateTaskIntentUI;
+			sourceTree = "<group>";
+		};
 		F051A3BF2D7ABB91009BF97C /* Smart Study Planner */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F04A8F692DBC26370066FBFE /* Exceptions for "Smart Study Planner" folder in "CreateTaskIntent" target */,
+				F04A8F6B2DBC263C0066FBFE /* Exceptions for "Smart Study Planner" folder in "CreateTaskIntentUI" target */,
+			);
 			path = "Smart Study Planner";
 			sourceTree = "<group>";
 		};
@@ -48,6 +143,22 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F04A8F382DBC19EE0066FBFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F04A8F3E2DBC19EF0066FBFE /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F04A8F442DBC19EF0066FBFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F04A8F492DBC19EF0066FBFE /* IntentsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F051A3BA2D7ABB91009BF97C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,12 +183,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F04A8F3C2DBC19EF0066FBFE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F04A8F3D2DBC19EF0066FBFE /* Intents.framework */,
+				F04A8F482DBC19EF0066FBFE /* IntentsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F051A3B42D7ABB91009BF97C = {
 			isa = PBXGroup;
 			children = (
 				F051A3BF2D7ABB91009BF97C /* Smart Study Planner */,
 				F051A3D52D7ABB93009BF97C /* Smart Study PlannerTests */,
 				F051A3DF2D7ABB93009BF97C /* Smart Study PlannerUITests */,
+				F04A8F3F2DBC19EF0066FBFE /* CreateTaskIntent */,
+				F04A8F4A2DBC19EF0066FBFE /* CreateTaskIntentUI */,
+				F04A8F3C2DBC19EF0066FBFE /* Frameworks */,
 				F051A3BE2D7ABB91009BF97C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +211,8 @@
 				F051A3BD2D7ABB91009BF97C /* Smart Study Planner.app */,
 				F051A3D22D7ABB93009BF97C /* Smart Study PlannerTests.xctest */,
 				F051A3DC2D7ABB93009BF97C /* Smart Study PlannerUITests.xctest */,
+				F04A8F3B2DBC19EE0066FBFE /* CreateTaskIntent.appex */,
+				F04A8F472DBC19EF0066FBFE /* CreateTaskIntentUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +220,50 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F04A8F3A2DBC19EE0066FBFE /* CreateTaskIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F04A8F582DBC19EF0066FBFE /* Build configuration list for PBXNativeTarget "CreateTaskIntent" */;
+			buildPhases = (
+				F04A8F372DBC19EE0066FBFE /* Sources */,
+				F04A8F382DBC19EE0066FBFE /* Frameworks */,
+				F04A8F392DBC19EE0066FBFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F04A8F3F2DBC19EF0066FBFE /* CreateTaskIntent */,
+			);
+			name = CreateTaskIntent;
+			packageProductDependencies = (
+			);
+			productName = CreateTaskIntent;
+			productReference = F04A8F3B2DBC19EE0066FBFE /* CreateTaskIntent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F04A8F462DBC19EF0066FBFE /* CreateTaskIntentUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F04A8F5C2DBC19EF0066FBFE /* Build configuration list for PBXNativeTarget "CreateTaskIntentUI" */;
+			buildPhases = (
+				F04A8F432DBC19EF0066FBFE /* Sources */,
+				F04A8F442DBC19EF0066FBFE /* Frameworks */,
+				F04A8F452DBC19EF0066FBFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F04A8F4A2DBC19EF0066FBFE /* CreateTaskIntentUI */,
+			);
+			name = CreateTaskIntentUI;
+			packageProductDependencies = (
+			);
+			productName = CreateTaskIntentUI;
+			productReference = F04A8F472DBC19EF0066FBFE /* CreateTaskIntentUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F051A3BC2D7ABB91009BF97C /* Smart Study Planner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F051A3E62D7ABB93009BF97C /* Build configuration list for PBXNativeTarget "Smart Study Planner" */;
@@ -102,10 +271,13 @@
 				F051A3B92D7ABB91009BF97C /* Sources */,
 				F051A3BA2D7ABB91009BF97C /* Frameworks */,
 				F051A3BB2D7ABB91009BF97C /* Resources */,
+				F04A8F5F2DBC19EF0066FBFE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F04A8F522DBC19EF0066FBFE /* PBXTargetDependency */,
+				F04A8F552DBC19EF0066FBFE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F051A3BF2D7ABB91009BF97C /* Smart Study Planner */,
@@ -170,9 +342,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					F04A8F3A2DBC19EE0066FBFE = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					F04A8F462DBC19EF0066FBFE = {
+						CreatedOnToolsVersion = 16.3;
+					};
 					F051A3BC2D7ABB91009BF97C = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -203,11 +381,27 @@
 				F051A3BC2D7ABB91009BF97C /* Smart Study Planner */,
 				F051A3D12D7ABB93009BF97C /* Smart Study PlannerTests */,
 				F051A3DB2D7ABB93009BF97C /* Smart Study PlannerUITests */,
+				F04A8F3A2DBC19EE0066FBFE /* CreateTaskIntent */,
+				F04A8F462DBC19EF0066FBFE /* CreateTaskIntentUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F04A8F392DBC19EE0066FBFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F04A8F452DBC19EF0066FBFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F051A3BB2D7ABB91009BF97C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +426,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F04A8F372DBC19EE0066FBFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F04A8F432DBC19EF0066FBFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F051A3B92D7ABB91009BF97C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -256,6 +464,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F04A8F522DBC19EF0066FBFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F04A8F462DBC19EF0066FBFE /* CreateTaskIntentUI */;
+			targetProxy = F04A8F512DBC19EF0066FBFE /* PBXContainerItemProxy */;
+		};
+		F04A8F552DBC19EF0066FBFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F04A8F3A2DBC19EE0066FBFE /* CreateTaskIntent */;
+			targetProxy = F04A8F542DBC19EF0066FBFE /* PBXContainerItemProxy */;
+		};
 		F051A3D42D7ABB93009BF97C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F051A3BC2D7ABB91009BF97C /* Smart Study Planner */;
@@ -269,6 +487,114 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F04A8F592DBC19EF0066FBFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CreateTaskIntent/CreateTaskIntent.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5MFCUG2773;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreateTaskIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreateTaskIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "SmartStudy.Smart-Study-Planner.CreateTaskIntent";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F04A8F5A2DBC19EF0066FBFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CreateTaskIntent/CreateTaskIntent.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5MFCUG2773;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreateTaskIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreateTaskIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "SmartStudy.Smart-Study-Planner.CreateTaskIntent";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F04A8F5D2DBC19EF0066FBFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CreateTaskIntentUI/CreateTaskIntentUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5MFCUG2773;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreateTaskIntentUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreateTaskIntentUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "SmartStudy.Smart-Study-Planner.CreateTaskIntentUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F04A8F5E2DBC19EF0066FBFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CreateTaskIntentUI/CreateTaskIntentUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5MFCUG2773;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreateTaskIntentUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreateTaskIntentUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "SmartStudy.Smart-Study-Planner.CreateTaskIntentUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F051A3E42D7ABB93009BF97C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -539,6 +865,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F04A8F582DBC19EF0066FBFE /* Build configuration list for PBXNativeTarget "CreateTaskIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F04A8F592DBC19EF0066FBFE /* Debug */,
+				F04A8F5A2DBC19EF0066FBFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F04A8F5C2DBC19EF0066FBFE /* Build configuration list for PBXNativeTarget "CreateTaskIntentUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F04A8F5D2DBC19EF0066FBFE /* Debug */,
+				F04A8F5E2DBC19EF0066FBFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F051A3B82D7ABB91009BF97C /* Build configuration list for PBXProject "Smart Study Planner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

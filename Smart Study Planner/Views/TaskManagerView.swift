@@ -109,7 +109,7 @@ struct TaskManagerView: View {
                                 
                                 ForEach(viewModel.pendingTasks) { task in
                                     NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
-                                        TaskCard(task: task)
+                                        TaskCard(task: task, viewModel: viewModel)
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
@@ -138,7 +138,7 @@ struct TaskManagerView: View {
                                 
                                 ForEach(viewModel.completedTasks.prefix(1)) { task in
                                     NavigationLink(destination: TaskDetailView(task: task, viewModel: viewModel)) {
-                                        CompletedTaskCard(task: task)
+                                        CompletedTaskCard(task: task, viewModel: viewModel)
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
@@ -196,28 +196,31 @@ struct FilterButton: View {
 }
 
 struct TaskCard: View {
-    let task: StudyTask
+    let task: CDStudyTask
+    @ObservedObject var viewModel: TaskManagerViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(task.title)
+            Text(task.title ?? "")
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
             
-            Text(task.subject)
+            Text(task.subject ?? "")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
             HStack {
-                PriorityBadge(priority: task.priority)
+                PriorityBadge(priority: Int(task.priority))
                 Spacer()
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
                         .foregroundColor(.blue)
-                    Text(task.deadline, style: .relative)
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                    if let deadline = task.deadline {
+                        Text(deadline, style: .relative)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
                 }
             }
         }
@@ -239,25 +242,29 @@ struct TaskCard: View {
                 )
         )
         .padding(.horizontal)
+        .onTapGesture {
+            viewModel.toggleTaskCompletion(task)
+        }
     }
 }
 
 struct CompletedTaskCard: View {
-    let task: StudyTask
+    let task: CDStudyTask
+    @ObservedObject var viewModel: TaskManagerViewModel
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
-                Text(task.title)
+                Text(task.title ?? "")
                     .strikethrough()
                     .foregroundColor(.gray)
-                Text(task.subject)
+                Text(task.subject ?? "")
                     .font(.caption)
                     .foregroundColor(.gray)
             }
             Spacer()
             Button("Undo") {
-                // Undo completion action
+                viewModel.toggleTaskCompletion(task)
             }
             .foregroundColor(.blue)
             .font(.subheadline)

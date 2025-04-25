@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TaskDetailView: View {
-    let task: StudyTask
+    let task: CDStudyTask
     @ObservedObject var viewModel: TaskManagerViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -10,7 +10,7 @@ struct TaskDetailView: View {
             VStack(alignment: .leading, spacing: 24) {
                 // Header with gradient background
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(task.title)
+                    Text(task.title ?? "")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundStyle(
@@ -21,7 +21,7 @@ struct TaskDetailView: View {
                             )
                         )
                     
-                    Text(task.subject)
+                    Text(task.subject ?? "")
                         .font(.title3)
                         .foregroundColor(.gray)
                 }
@@ -45,7 +45,7 @@ struct TaskDetailView: View {
                         Label("Priority", systemImage: "flag.fill")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        PriorityBadge(priority: task.priority)
+                        PriorityBadge(priority: Int(task.priority))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
@@ -60,9 +60,11 @@ struct TaskDetailView: View {
                         Label("Due Date", systemImage: "calendar")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        Text(task.deadline.formatted(date: .long, time: .shortened))
-                            .font(.body)
-                            .fontWeight(.medium)
+                        if let deadline = task.deadline {
+                            Text(deadline, style: .date)
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
@@ -72,87 +74,68 @@ struct TaskDetailView: View {
                             .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
                     )
                 }
+                .padding(.horizontal)
                 
                 // Notes Section
-                if let notes = task.notes {
+                if let notes = task.notes, !notes.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Notes", systemImage: "note.text")
+                        Text("Notes")
                             .font(.headline)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.purple, .blue],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
+                            .foregroundColor(.primary)
                         
                         Text(notes)
                             .font(.body)
                             .foregroundColor(.secondary)
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(.systemBackground))
-                                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-                            )
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(.systemBackground))
+                            .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+                    )
+                    .padding(.horizontal)
                 }
-                
-                Spacer()
                 
                 // Action Buttons
-                if task.status == "pending" {
+                HStack(spacing: 16) {
                     Button(action: {
-                        viewModel.completeTask(task)
+                        viewModel.toggleTaskCompletion(task)
                         dismiss()
                     }) {
-                        HStack {
-                            Image(systemName: "checkmark.circle.fill")
-                            Text("Mark as Complete")
-                                .fontWeight(.semibold)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                colors: [.green, .green.opacity(0.8)],
-                                startPoint: .leading,
-                                endPoint: .trailing
+                        Text(task.completed ? "Mark as Incomplete" : "Mark as Complete")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(
+                                LinearGradient(
+                                    colors: [.blue, .purple],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
                             )
-                        )
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: .green.opacity(0.3), radius: 5, x: 0, y: 3)
+                            .clipShape(Capsule())
                     }
-                } else {
+                    
                     Button(action: {
-                        viewModel.undoTaskCompletion(task)
+                        viewModel.deleteTask(task)
                         dismiss()
                     }) {
-                        HStack {
-                            Image(systemName: "arrow.uturn.backward.circle.fill")
-                            Text("Mark as Incomplete")
-                                .fontWeight(.semibold)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                colors: [.blue, .purple],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: .blue.opacity(0.3), radius: 5, x: 0, y: 3)
+                        Text("Delete Task")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.red)
+                            .clipShape(Capsule())
                     }
                 }
+                .padding(.horizontal)
+                .padding(.top, 24)
             }
-            .padding()
+            .padding(.vertical)
         }
-        .background(Color(.systemGray6).opacity(0.5))
         .navigationBarTitleDisplayMode(.inline)
     }
 } 

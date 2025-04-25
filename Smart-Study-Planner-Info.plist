@@ -4,6 +4,10 @@
 <dict>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>CreateTaskIntent</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array/>
 </dict>

@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import UIKit
 
 class DashboardViewModel: ObservableObject {
     @Published var userName: String = "John Doe"
@@ -14,6 +15,8 @@ class DashboardViewModel: ObservableObject {
     @Published var searchQuery: String = ""
     @Published var searchResults: [SearchResult] = []
     @Published var isSearching: Bool = false
+    @Published var isFocusModeEnabled: Bool = false
+    @Published var isDNDEnabled: Bool = false
     
     // Dummy data for search
     private let dummyTasks: [SearchResult] = [
@@ -153,6 +156,7 @@ class DashboardViewModel: ObservableObject {
     func endCurrentSession() {
         hasActiveSession = false
         currentSessionRemainingTime = 0
+        disableDNDMode()
     }
     
     private func performSearch(query: String) {
@@ -167,6 +171,79 @@ class DashboardViewModel: ObservableObject {
         searchResults = dummyTasks.filter { task in
             task.title.localizedCaseInsensitiveContains(query) ||
             task.subject.localizedCaseInsensitiveContains(query)
+        }
+    }
+    
+    func toggleFocusMode() {
+        isFocusModeEnabled.toggle()
+        if isFocusModeEnabled {
+            startFocusSession()
+        } else {
+            endCurrentSession()
+        }
+    }
+    
+    private func startFocusSession() {
+        hasActiveSession = true
+        currentSessionRemainingTime = estimatedFocusTime
+        
+        // Enable DND mode
+        enableDNDMode()
+        
+        // Start a timer to update the current session remaining time
+        Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self, self.hasActiveSession else { return }
+                if self.currentSessionRemainingTime > 0 {
+                    self.currentSessionRemainingTime -= 1
+                } else {
+                    self.hasActiveSession = false
+                    self.isFocusModeEnabled = false
+                    self.disableDNDMode()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func enableDNDMode() {
+        // Request authorization to control focus state
+        FocusStateManager.shared.requestAuthorization { [weak self] granted in
+            if granted {
+                DispatchQueue.main.async {
+                    self?.isDNDEnabled = true
+                    
+                    // Create a focus activity for study
+                    let focusActivity = FocusActivity(
+                        name: "Study Focus",
+                        icon: "book.fill",
+                        color: .systemBlue
+                    )
+                    
+                    // Enable focus mode
+                    FocusStateManager.shared.enableFocus(for: focusActivity) { success in
+                        if !success {
+                            print("Failed to enable focus mode")
+                            self?.isDNDEnabled = false
+                        }
+                    }
+                }
+            } else {
+                print("Focus state authorization denied")
+            }
+        }
+    }
+    
+    private func disableDNDMode() {
+        if isDNDEnabled {
+            FocusStateManager.shared.disableFocus { [weak self] success in
+                DispatchQueue.main.async {
+                    self?.isDNDEnabled = false
+                    if !success {
+                        print("Failed to disable focus mode")
+                    }
+                }
+            }
         }
     }
 }

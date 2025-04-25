@@ -54,8 +54,10 @@ struct DashboardView: View {
                                     .padding(.horizontal)
                                 
                                 // Focus Mode Toggle
-                                FocusModeCard(isEnabled: $isFocusModeEnabled,
-                                            estimatedTime: viewModel.estimatedFocusTime)
+                                FocusModeCard(isEnabled: $viewModel.isFocusModeEnabled,
+                                            estimatedTime: viewModel.estimatedFocusTime,
+                                            isDNDEnabled: viewModel.isDNDEnabled,
+                                            onToggle: viewModel.toggleFocusMode)
                                     .padding(.horizontal)
                                 
                                 // Current Session
@@ -262,6 +264,8 @@ struct WeeklyProgressCard: View {
 struct FocusModeCard: View {
     @Binding var isEnabled: Bool
     let estimatedTime: TimeInterval
+    let isDNDEnabled: Bool
+    let onToggle: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -273,7 +277,21 @@ struct FocusModeCard: View {
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 Spacer()
-                Toggle("", isOn: $isEnabled)
+                Toggle("", isOn: Binding(
+                    get: { isEnabled },
+                    set: { _ in onToggle() }
+                ))
+            }
+            
+            if isDNDEnabled {
+                HStack {
+                    Image(systemName: "moon.fill")
+                        .foregroundColor(.blue)
+                    Text("Do Not Disturb is active")
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                }
+                .padding(.top, 4)
             }
         }
         .padding()

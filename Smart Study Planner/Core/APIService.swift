@@ -18,31 +18,31 @@ class APIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("🚀 Sending login request to: \(url)")
-        print("📩 Request headers: \(request.allHTTPHeaderFields ?? [:])")
+        print("Sending login request to: \(url)")
+        print("Request headers: \(request.allHTTPHeaderFields ?? [:])")
 
         let body: [String: String] = ["email": email, "password": password]
         do {
             request.httpBody = try JSONEncoder().encode(body)
             if let jsonString = String(data: request.httpBody!, encoding: .utf8) {
-                print("📤 Request body: \(jsonString)")
+                print(" Request body: \(jsonString)")
             }
         } catch {
-            print("❌ Failed to encode request body: \(error)")
+            print("Failed to encode request body: \(error)")
             completion(.failure(error))
             return
         }
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print(" Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print("HTTP Response Status: \(httpResponse.statusCode)")
+                print("Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -77,13 +77,13 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print("No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print("Raw response data: \(responseString)")
             }
 
             do {
@@ -107,11 +107,11 @@ class APIService {
                     theme: (userDict["theme"] as? String) ?? "light",
                     defaultStudyDuration: (userDict["defaultStudyDuration"] as? Double) ?? 3600
                 )
-                print("✅ Successfully decoded user: \(user)")
+                print("Successfully decoded user: \(user)")
                 self.token = user.token
                 completion(.success(user))
             } catch {
-                print("❌ Decoding error: \(error)")
+                print("Decoding error: \(error)")
                 completion(.failure(error))
             }
         }.resume()
@@ -137,31 +137,31 @@ class APIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("🚀 Sending register request to: \(url)")
-        print("📩 Request headers: \(request.allHTTPHeaderFields ?? [:])")
+        print("Sending register request to: \(url)")
+        print("Request headers: \(request.allHTTPHeaderFields ?? [:])")
 
         let body: [String: String] = ["email": email, "password": password, "name": name]
         do {
             request.httpBody = try JSONEncoder().encode(body)
             if let jsonString = String(data: request.httpBody!, encoding: .utf8) {
-                print("📤 Request body: \(jsonString)")
+                print("Request body: \(jsonString)")
             }
         } catch {
-            print("❌ Failed to encode request body: \(error)")
+            print("Failed to encode request body: \(error)")
             completion(.failure(error))
             return
         }
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print("Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print("HTTP Response Status: \(httpResponse.statusCode)")
+                print("Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -196,13 +196,13 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print("No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print(" Raw response data: \(responseString)")
             }
 
             do {
@@ -226,11 +226,11 @@ class APIService {
                     theme: (userDict["theme"] as? String) ?? "light",
                     defaultStudyDuration: (userDict["defaultStudyDuration"] as? Double) ?? 3600
                 )
-                print("✅ Successfully decoded user: \(user)")
+                print("Successfully decoded user: \(user)")
                 self.token = user.token
                 completion(.success(user))
             } catch {
-                print("❌ Decoding error: \(error)")
+                print("Decoding error: \(error)")
                 completion(.failure(error))
             }
         }.resume()
@@ -256,8 +256,8 @@ class APIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("🚀 Sending Apple register request to: \(url)")
-        print("📩 Request headers: \(request.allHTTPHeaderFields ?? [:])")
+        print("Sending Apple register request to: \(url)")
+        print("Request headers: \(request.allHTTPHeaderFields ?? [:])")
 
         let body: [String: Any] = [
             "identityToken": identityToken,
@@ -266,24 +266,24 @@ class APIService {
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
             if let jsonString = String(data: request.httpBody!, encoding: .utf8) {
-                print("📤 Request body: \(jsonString)")
+                print(" Request body: \(jsonString)")
             }
         } catch {
-            print("❌ Failed to encode request body: \(error)")
+            print(" Failed to encode request body: \(error)")
             completion(.failure(error))
             return
         }
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print("Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print("HTTP Response Status: \(httpResponse.statusCode)")
+                print("Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -318,13 +318,13 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print("No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print(" Raw response data: \(responseString)")
             }
 
             do {
@@ -348,11 +348,11 @@ class APIService {
                     theme: (userDict["theme"] as? String) ?? "light",
                     defaultStudyDuration: (userDict["defaultStudyDuration"] as? Double) ?? 3600
                 )
-                print("✅ Successfully decoded user: \(user)")
+                print("Successfully decoded user: \(user)")
                 self.token = user.token
                 completion(.success(user))
             } catch {
-                print("❌ Decoding error: \(error)")
+                print(" Decoding error: \(error)")
                 completion(.failure(error))
             }
         }.resume()
@@ -378,31 +378,31 @@ class APIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("🚀 Sending password reset request to: \(url)")
-        print("📩 Request headers: \(request.allHTTPHeaderFields ?? [:])")
+        print("Sending password reset request to: \(url)")
+        print(" Request headers: \(request.allHTTPHeaderFields ?? [:])")
 
         let body: [String: String] = ["email": email]
         do {
             request.httpBody = try JSONEncoder().encode(body)
             if let jsonString = String(data: request.httpBody!, encoding: .utf8) {
-                print("📤 Request body: \(jsonString)")
+                print(" Request body: \(jsonString)")
             }
         } catch {
-            print("❌ Failed to encode request body: \(error)")
+            print("Failed to encode request body: \(error)")
             completion(.failure(error))
             return
         }
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print(" Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print(" HTTP Response Status: \(httpResponse.statusCode)")
+                print(" Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -437,21 +437,21 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print(" No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print(" Raw response data: \(responseString)")
             }
 
             do {
                 let response = try JSONDecoder().decode(OTPResponse.self, from: data)
-                print("✅ Successfully decoded OTP response: \(response)")
+                print(" Successfully decoded OTP response: \(response)")
                 completion(.success(response))
             } catch {
-                print("❌ Decoding error: \(error)")
+                print(" Decoding error: \(error)")
                 completion(.failure(error))
             }
         }.resume()
@@ -491,14 +491,14 @@ class APIService {
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print(" Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print(" HTTP Response Status: \(httpResponse.statusCode)")
+                print(" Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -533,13 +533,13 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print(" No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print("Raw response data: \(responseString)")
             }
 
             do {
@@ -585,14 +585,14 @@ class APIService {
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("❌ Network error: \(error.localizedDescription)")
+                print(" Network error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
-                print("📥 HTTP Response Status: \(httpResponse.statusCode)")
-                print("📥 Response headers: \(httpResponse.allHeaderFields)")
+                print("HTTP Response Status: \(httpResponse.statusCode)")
+                print(" Response headers: \(httpResponse.allHeaderFields)")
                 
                 // Handle different HTTP status codes
                 switch httpResponse.statusCode {
@@ -627,13 +627,13 @@ class APIService {
 
             guard let data = data else {
                 let noDataError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
-                print("❌ No data received from server")
+                print(" No data received from server")
                 completion(.failure(noDataError))
                 return
             }
 
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📥 Raw response data: \(responseString)")
+                print("Raw response data: \(responseString)")
             }
 
             do {

@@ -50,18 +50,13 @@ struct AddTaskView: View {
     }
     
     private func saveTask() {
-        let task = StudyTask(
-            taskID: UUID().uuidString,
-            userID: "user1", // In a real app, this would come from authentication
+        viewModel.addTask(
             title: title,
             subject: subject,
             deadline: deadline,
             priority: priority,
-            status: "pending",
             notes: notes.isEmpty ? nil : notes
         )
-        
-        viewModel.addTask(task)
         dismiss()
     }
 } 

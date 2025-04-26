@@ -29,32 +29,94 @@ struct StudyLocationMapView: View {
 
 struct LocationDetailView: View {
     let location: StudyLocation
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(location.name)
-                .font(.title)
-                .bold()
-            
-            if let notes = location.notes {
-                Text(notes)
-                    .font(.body)
-            }
-            
-            if let rating = location.rating {
-                HStack {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                    Text(String(format: "%.1f", rating))
-                        .font(.subheadline)
+        VStack(spacing: 0) {
+            // Header with location name and close button
+            HStack {
+                Text(location.name)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.purple, .blue],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                
+                Spacer()
+                
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                        .font(.title2)
                 }
             }
+            .padding()
+            .background(Color(.systemBackground))
             
-            Button("Get Directions") {
-                openMaps(for: location)
+            // Content
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // Rating section
+                    if let rating = location.rating {
+                        HStack(spacing: 4) {
+                            ForEach(0..<5) { index in
+                                Image(systemName: index < Int(rating) ? "star.fill" : 
+                                    (index < Int(rating + 0.5) ? "star.leadinghalf.filled" : "star"))
+                                    .foregroundColor(.yellow)
+                            }
+                            Text(String(format: "%.1f", rating))
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.top, 8)
+                    }
+                    
+                    // Notes section
+                    if let notes = location.notes {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("About this location")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                            
+                            Text(notes)
+                                .font(.body)
+                                .lineSpacing(4)
+                        }
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(12)
+                    }
+                    
+                    // Get Directions button
+                    Button(action: { openMaps(for: location) }) {
+                        HStack {
+                            Image(systemName: "map.fill")
+                            Text("Get Directions")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            LinearGradient(
+                                colors: [.blue, .purple],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                    }
+                    .padding(.top, 8)
+                }
+                .padding()
             }
-            .buttonStyle(.borderedProminent)
         }
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(radius: 5)
         .padding()
     }
     

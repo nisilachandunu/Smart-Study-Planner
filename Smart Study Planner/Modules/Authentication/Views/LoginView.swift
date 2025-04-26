@@ -7,11 +7,13 @@
 
 import SwiftUI
 import LocalAuthentication
+import AuthenticationServices
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     @State private var navigateToForgotPassword: Bool = false
     @State private var navigateToSignUp: Bool = false
+    @EnvironmentObject private var appTheme: AppTheme
 
     var body: some View {
         NavigationView {
@@ -126,6 +128,7 @@ struct LoginView: View {
             )
             .fullScreenCover(isPresented: $viewModel.isAuthenticated) {
                 DashboardView()
+                    .environmentObject(appTheme)
             }
         }
     }
@@ -146,5 +149,6 @@ struct SignUpView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+            .environmentObject(AppTheme.shared)
     }
 }

@@ -7,12 +7,12 @@
 		<key>CreateTaskIntent.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>CreateTaskIntentUI.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Smart Study Planner.xcscheme_^#shared#^_</key>
 		<dict>

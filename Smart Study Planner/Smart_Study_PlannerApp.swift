@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct Smart_Study_PlannerApp: App {
     let persistenceController = PersistenceController.shared
+    @StateObject private var appTheme = AppTheme.shared
 
     var body: some Scene {
         WindowGroup {
             LoginView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(appTheme)
         }
     }
 }

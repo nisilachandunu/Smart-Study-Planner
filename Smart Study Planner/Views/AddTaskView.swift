@@ -1,4 +1,5 @@
 import SwiftUI
+import Speech
 
 struct AddTaskView: View {
     @ObservedObject var viewModel: TaskManagerViewModel
@@ -10,11 +11,32 @@ struct AddTaskView: View {
     @State private var priority = 2
     @State private var notes = ""
     
+    @StateObject private var speechRecognizer = SpeechRecognizer()
+    @State private var isRecordingTitle = false
+    @State private var isRecordingNotes = false
+    @State private var showingPermissionAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Task Details")) {
-                    TextField("Title", text: $title)
+                    HStack {
+                        TextField("Title", text: $title)
+                        Button(action: {
+                            if isRecordingTitle {
+                                speechRecognizer.stopRecording()
+                                isRecordingTitle = false
+                            } else {
+                                speechRecognizer.startRecording()
+                                isRecordingTitle = true
+                            }
+                        }) {
+                            Image(systemName: isRecordingTitle ? "stop.circle.fill" : "mic.circle")
+                                .foregroundColor(isRecordingTitle ? .red : .blue)
+                                .font(.title2)
+                        }
+                    }
+                    
                     TextField("Subject", text: $subject)
                 }
                 
@@ -32,8 +54,34 @@ struct AddTaskView: View {
                 }
                 
                 Section(header: Text("Additional Notes")) {
-                    TextEditor(text: $notes)
-                        .frame(height: 100)
+                    VStack(alignment: .leading) {
+                        TextEditor(text: $notes)
+                            .frame(height: 100)
+                        
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                if isRecordingNotes {
+                                    speechRecognizer.stopRecording()
+                                    isRecordingNotes = false
+                                } else {
+                                    speechRecognizer.startRecording()
+                                    isRecordingNotes = true
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: isRecordingNotes ? "stop.circle.fill" : "mic.circle")
+                                        .foregroundColor(isRecordingNotes ? .red : .blue)
+                                    Text(isRecordingNotes ? "Stop Recording" : "Record Notes")
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 12)
+                                .background(Color.blue.opacity(0.1))
+                                .cornerRadius(8)
+                            }
+                        }
+                        .padding(.top, 8)
+                    }
                 }
             }
             .navigationTitle("Add New Task")
@@ -46,6 +94,25 @@ struct AddTaskView: View {
                 }
                 .disabled(title.isEmpty || subject.isEmpty)
             )
+            .onChange(of: speechRecognizer.transcribedText) { newValue in
+                if isRecordingTitle {
+                    title = newValue
+                } else if isRecordingNotes {
+                    notes = newValue
+                }
+            }
+            .onChange(of: speechRecognizer.errorMessage) { newValue in
+                if newValue != nil {
+                    showingPermissionAlert = true
+                }
+            }
+            .alert(isPresented: $showingPermissionAlert) {
+                Alert(
+                    title: Text("Speech Recognition Error"),
+                    message: Text(speechRecognizer.errorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     

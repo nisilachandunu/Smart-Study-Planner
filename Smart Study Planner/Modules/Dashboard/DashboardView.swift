@@ -4,6 +4,7 @@ import Charts
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
     @State private var isFocusModeEnabled = false
+    @EnvironmentObject private var appTheme: AppTheme
     
     var body: some View {
         TabView {
@@ -12,21 +13,22 @@ struct DashboardView: View {
                     // Search Bar - Always visible at the top
                     DashboardSearchBar(text: $viewModel.searchQuery)
                         .padding(.horizontal)
-                        .padding(.vertical, 2)
+                        .padding(.vertical, 8)
                         .background(Color(.systemBackground))
                     
                     ScrollView {
-                        VStack(spacing: 12) {
+                        VStack(spacing: 20) {
                             // Welcome Section with Profile Image
                             HStack {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 16) {
                                     Image(systemName: "person.circle.fill")
                                         .resizable()
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: 50, height: 50)
                                         .clipShape(Circle())
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.blue)
+                                        .background(Circle().fill(Color.blue.opacity(0.1)))
                                     
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 4) {
                                         Text("Welcome back,")
                                             .font(.subheadline)
                                             .foregroundColor(.gray)
@@ -39,6 +41,7 @@ struct DashboardView: View {
                                 NotificationBellView(count: viewModel.unreadNotifications)
                             }
                             .padding(.horizontal)
+                            .padding(.top, 8)
                             
                             // Search Results or Main Content
                             if viewModel.isSearching {
@@ -72,9 +75,10 @@ struct DashboardView: View {
                                 // Notifications
                                 NotificationsCard(notifications: viewModel.recentNotifications)
                                     .padding(.horizontal)
+                                    .padding(.bottom, 20)
                             }
                         }
-                        .padding(.vertical, 4)
+                        .padding(.vertical, 8)
                     }
                 }
                 .navigationBarTitleDisplayMode(.inline)
@@ -130,9 +134,9 @@ struct DashboardSearchBar: View {
                 }
             }
         }
-        .padding(8)
+        .padding(12)
         .background(Color(.systemGray6))
-        .cornerRadius(10)
+        .cornerRadius(12)
     }
 }
 
@@ -141,23 +145,24 @@ struct SearchResultsView: View {
     let results: [SearchResult]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             Text("Search Results")
                 .font(.headline)
             
             if results.isEmpty {
                 Text("No results found")
                     .foregroundColor(.gray)
-                    .padding(.vertical)
+                    .padding(.vertical, 12)
             } else {
                 ForEach(results) { result in
                     SearchResultRow(result: result)
+                        .padding(.vertical, 8)
                 }
             }
         }
-        .padding()
+        .padding(16)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -165,12 +170,12 @@ struct SearchResultRow: View {
     let result: SearchResult
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 16) {
             Circle()
                 .fill(result.priority.color)
-                .frame(width: 8, height: 8)
+                .frame(width: 10, height: 10)
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(result.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
@@ -188,7 +193,7 @@ struct SearchResultRow: View {
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 6)
     }
 }
 
@@ -197,20 +202,20 @@ struct NextSessionCard: View {
     let session: StudySession?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             Text("Next Study Session")
                 .font(.headline)
             
             if let session = session {
-                HStack(spacing: 15) {
+                HStack(spacing: 20) {
                     Image(systemName: "book.fill")
                         .font(.title2)
                         .foregroundColor(.blue)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 50, height: 50)
                         .background(Color.blue.opacity(0.1))
-                        .cornerRadius(8)
+                        .cornerRadius(12)
                     
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("Mathematics")
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -222,11 +227,12 @@ struct NextSessionCard: View {
             } else {
                 Text("No upcoming sessions")
                     .foregroundColor(.gray)
+                    .padding(.vertical, 8)
             }
         }
-        .padding()
+        .padding(20)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -234,7 +240,7 @@ struct WeeklyProgressCard: View {
     let progressData: [(day: String, hours: Double)]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("Weekly Progress")
                     .font(.headline)
@@ -255,9 +261,9 @@ struct WeeklyProgressCard: View {
             }
             .frame(height: 200)
         }
-        .padding()
+        .padding(20)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -268,7 +274,7 @@ struct FocusModeCard: View {
     let onToggle: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             Text("Focus Mode")
                 .font(.headline)
             
@@ -281,22 +287,23 @@ struct FocusModeCard: View {
                     get: { isEnabled },
                     set: { _ in onToggle() }
                 ))
+                .tint(.blue)
             }
             
             if isDNDEnabled {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "moon.fill")
                         .foregroundColor(.blue)
                     Text("Do Not Disturb is active")
                         .font(.caption)
                         .foregroundColor(.blue)
                 }
-                .padding(.top, 4)
+                .padding(.top, 8)
             }
         }
-        .padding()
+        .padding(20)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -305,8 +312,8 @@ struct CurrentSessionCard: View {
     let onEnd: () -> Void
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
+        HStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text("Current Session")
                     .font(.headline)
                 Text("\(Int(remainingTime/60)):\(Int(remainingTime.truncatingRemainder(dividingBy: 60))) remaining")
@@ -318,14 +325,14 @@ struct CurrentSessionCard: View {
                 onEnd()
             }
             .foregroundColor(.white)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 10)
             .background(Color.blue)
-            .cornerRadius(20)
+            .cornerRadius(24)
         }
-        .padding()
+        .padding(20)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -333,7 +340,7 @@ struct NotificationsCard: View {
     let notifications: [NotificationItem]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("Notifications")
                     .font(.headline)
@@ -347,11 +354,12 @@ struct NotificationsCard: View {
             
             ForEach(notifications) { notification in
                 NotificationRow(notification: notification)
+                    .padding(.vertical, 8)
             }
         }
-        .padding()
+        .padding(20)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(15)
+        .cornerRadius(16)
     }
 }
 
@@ -359,10 +367,10 @@ struct NotificationRow: View {
     let notification: NotificationItem
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 16) {
             Circle()
                 .fill(notification.isRead ? Color.gray.opacity(0.3) : Color.blue)
-                .frame(width: 8, height: 8)
+                .frame(width: 10, height: 10)
             
             Text(notification.message)
                 .font(.subheadline)
@@ -390,7 +398,7 @@ struct NotificationBellView: View {
                 Text("\(count)")
                     .font(.caption2)
                     .foregroundColor(.white)
-                    .padding(4)
+                    .padding(5)
                     .background(Color.red)
                     .clipShape(Circle())
                     .offset(x: 8, y: -8)

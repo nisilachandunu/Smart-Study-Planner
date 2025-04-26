@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var appTheme: AppTheme
     
     var body: some View {
         NavigationView {
@@ -232,4 +233,5 @@ struct SettingsRow<Content: View>: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(AppTheme.shared)
 } 

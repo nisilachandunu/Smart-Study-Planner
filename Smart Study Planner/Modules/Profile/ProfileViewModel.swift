@@ -12,10 +12,22 @@ class ProfileViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private let userService: UserServiceProtocol
+    private let appTheme: AppTheme
     
-    init(userService: UserServiceProtocol = UserService()) {
+    init(userService: UserServiceProtocol = UserService(), appTheme: AppTheme = AppTheme.shared) {
         self.userService = userService
+        self.appTheme = appTheme
         loadUserData()
+        
+        // Sync with AppTheme
+        self.darkModeEnabled = appTheme.isDarkMode
+        
+        // Observe changes from AppTheme
+        appTheme.$isDarkMode
+            .sink { [weak self] newValue in
+                self?.darkModeEnabled = newValue
+            }
+            .store(in: &cancellables)
     }
     
     private func loadUserData() {
@@ -47,6 +59,9 @@ class ProfileViewModel: ObservableObject {
     func updateThemeSettings(enabled: Bool) {
         darkModeEnabled = enabled
         UserDefaults.standard.set(enabled, forKey: "darkModeEnabled")
+        
+        // Update AppTheme
+        appTheme.isDarkMode = enabled
         
         // In a real app, this would update the server
         userService.updateUserPreferences(notificationsEnabled: notificationsEnabled, theme: enabled ? "dark" : "light")
